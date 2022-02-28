@@ -6,13 +6,22 @@ class Employee:
 
     def __init__(self, employee_id, employee_name, employee_type, employee_years, employee_purchased,
                  employee_discounts, employee_discount_number):
-        self.employee_id = employee_id
+        self.employee_id = int(employee_id)
         self.employee_name = employee_name
         self.employee_type = employee_type
-        self.employee_years = employee_years
-        self.employee_discount_number = employee_discount_number
+        self.employee_years = int(employee_years)
+        self.employee_discount_number = int(employee_discount_number)
         self.employee_discounts = employee_discounts
         self.employee_purchased = employee_purchased
+
+    # def __init__(self, employee_id, employee_name, employee_type, employee_years, employee_discount_number):
+    #     self.employee_id = int(employee_id)
+    #     self.employee_name = employee_name
+    #     self.employee_type = employee_type
+    #     self.employee_years = int(employee_years)
+    #     self.employee_discount_number = int(employee_discount_number)
+    #     self.employee_discounts = 0
+    #     self.employee_purchased = 0
 
     def set_employee_id(self, employee_id):
         self.employee_id = employee_id
@@ -36,7 +45,25 @@ class Employee:
         self.employee_discount_number = employee_discount_number
 
     def get_employee_id(self):
-        self.employee_id
+        return self.employee_id
+
+    def get_employee_name(self):
+        return self.employee_name
+
+    def get_employee_type(self):
+        return self.employee_type
+
+    def get_employee_years(self):
+        return self.employee_years
+
+    def get_employee_purchased(self):
+        return self.employee_purchased
+
+    def set_employee_discounts(self):
+        return self.employee_discounts
+
+    def get_employee_discount_number(self):
+        return self.employee_discount_number
 
     def __str__(self) -> str:
         return f"\nEmployee ID: {self.employee_id}\n" \

@@ -4,8 +4,10 @@
 
 import employee
 
+# Pre Populate the list
 employee_list = []
-
+employee1 = employee.Employee(1001, "Otavio Barbosa", "Hourly", 10, 0, 0, 222333)
+employee_list.append(employee1)
 
 def menu():
     menu_active = True
@@ -18,33 +20,67 @@ def menu():
         print("| 4 - All Employee Summary", "|".rjust(8))
         print("| 5 - Exit", "|".rjust(24))
         print(35 * "-")
-        try:
-            user_choice = int(input("Enter a valid choice to select it: "))
-        except UserWarning:
-            print("You have not selected a valid menu item")
-        else:
-            if user_choice == 1:
-                create_employee(employee_list)
+        while True:
+            try:
+                user_choice = int(input("Enter a valid choice to select it: "))
+            except ValueError:
+                print("You have not selected a valid menu item")
                 continue
-            elif user_choice == 2:
-                create_item()
-            elif user_choice == 3:
-                make_purchase()
-            elif user_choice == 4:
-                summary()
-            elif user_choice == 5:
-                print("")
-                print("\t\t\tBye Bye")
-                menu_active = False
             else:
-                print("Please enter a valid option")
-
+                if user_choice == 1:
+                    create_employee(employee_list)
+                    continue
+                elif user_choice == 2:
+                    create_item()
+                elif user_choice == 3:
+                    make_purchase()
+                elif user_choice == 4:
+                    summary()
+                elif user_choice == 5:
+                    print("")
+                    print("\t\t\tBye Bye")
+                    menu_active = False
+                else:
+                    print("Please enter a valid option")
 
 def create_employee(employee_list):
-    employee1 = employee.Employee(1001, "Otavio Barbosa", "Hourly", 10, 0, 0, 222333)
-    employee_list.append(employee1)
-    for obj in employee_list:
-        print(obj)
+    employee_id = 0
+    employee_years_worked = 0
+    print((""))
+    print(35 * "-")
+    print("\t\t\tEmployee Menu")
+    print(35 * "-")
+    print("")
+    while True:
+        try:
+            employee_id = int(input("Enter an Employee ID: "))
+            for obj in employee_list:
+                if employee_id == obj.employee_id:
+                    print(f"\nWARNING -Employee ID {employee_id} already exists!"
+                          f"\nEmployee ID: {obj.employee_id}, Employee Name: {obj.employee_name}")
+                    continue
+                else:
+                    break
+        except ValueError:
+            print("You have not entered a number")
+            continue
+        finally:
+            employee_name = input("Enter Employee Name: ")
+
+    while True:
+        employee_type = input("Enter Employee Type(manager or hourly): ")
+        if employee_type == "manager" or employee_type == "hourly":
+            break
+        else:
+            continue
+    while True:
+        try:
+            employee_years_worked = int(input("Enter Employee Worked Years: "))
+            break
+        except ValueError:
+            print("You have not entered a number")
+            continue
+    print(employee_id, employee_name, employee_type, employee_years_worked)
     return employee_list
 
 def create_item():
