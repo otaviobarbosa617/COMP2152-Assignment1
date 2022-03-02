@@ -68,7 +68,8 @@ class Employee:
     def __str__(self) -> str:
         return f"\nEmployee ID: {self.employee_id}\n" \
                f"Employee Name: {self.employee_name}\n" \
-               f"Employee Type {self.employee_type}\n" \
+               f"Employee Type: {self.employee_type}\n" \
                f"Employee Years Worked: {self.employee_years}\n" \
+               f"Employee Total Purchases: {self.employee_purchased}\n" \
                f"Employee Total Discounts: {self.employee_discounts}\n" \
                f"Employee Discount Number: {self.employee_discount_number}\n"
