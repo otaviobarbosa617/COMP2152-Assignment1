@@ -9,6 +9,7 @@ employee_list = []
 employee1 = employee.Employee(1001, "Otavio Barbosa", "Hourly", 10, 0, 0, 222333)
 employee_list.append(employee1)
 
+
 def menu():
     menu_active = True
     while menu_active:
@@ -40,13 +41,15 @@ def menu():
                     print("")
                     print("\t\t\tBye Bye")
                     menu_active = False
+                    break
                 else:
                     print("Please enter a valid option")
+
 
 def create_employee(employee_list):
     employee_id = 0
     employee_years_worked = 0
-    print((""))
+    print("")
     print(35 * "-")
     print("\t\t\tEmployee Menu")
     print(35 * "-")
@@ -54,34 +57,41 @@ def create_employee(employee_list):
     while True:
         try:
             employee_id = int(input("Enter an Employee ID: "))
+        except ValueError:
+            print("You have not entered a number")
+            continue
+        else:
             for obj in employee_list:
                 if employee_id == obj.employee_id:
                     print(f"\nWARNING -Employee ID {employee_id} already exists!"
                           f"\nEmployee ID: {obj.employee_id}, Employee Name: {obj.employee_name}")
-                    continue
-                else:
+                    print("for loop")
                     break
-        except ValueError:
-            print("You have not entered a number")
-            continue
-        finally:
-            employee_name = input("Enter Employee Name: ")
+                else:
+                    continue
+            else:
+                break
 
-    while True:
-        employee_type = input("Enter Employee Type(manager or hourly): ")
-        if employee_type == "manager" or employee_type == "hourly":
-            break
-        else:
-            continue
-    while True:
-        try:
-            employee_years_worked = int(input("Enter Employee Worked Years: "))
-            break
-        except ValueError:
-            print("You have not entered a number")
-            continue
-    print(employee_id, employee_name, employee_type, employee_years_worked)
+    employee_name = input("Enter Employee Name: ")
+    print(employee_id, employee_name)
     return employee_list
+
+    # while True:
+    #     employee_type = input("Enter Employee Type(manager or hourly): ")
+    #     if employee_type == "manager" or employee_type == "hourly":
+    #         break
+    #     else:
+    #         continue
+    # while True:
+    #     try:
+    #         employee_years_worked = int(input("Enter Employee Worked Years: "))
+    #         break
+    #     except ValueError:
+    #         print("You have not entered a number")
+    #         continue
+    # print(employee_id, employee_name, employee_type, employee_years_worked)
+    # return employee_list
+
 
 def create_item():
     print("Test")
