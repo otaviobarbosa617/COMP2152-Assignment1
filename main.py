@@ -12,7 +12,9 @@ employee_list.append(employee1)
 
 item_list = []
 item1 = item.Item(1, "Python Course", 199)
+item2 = item.Item(2, "C# Course", 299)
 item_list.append(item1)
+item_list.append(item2)
 
 
 def menu():
@@ -34,17 +36,19 @@ def menu():
             else:
                 if user_choice == 1:
                     create_employee(employee_list)
-                    continue
+                    break
                 elif user_choice == 2:
                     create_item(item_list)
+                    break
                 elif user_choice == 3:
-                    make_purchase()
+                    make_purchase(item_list)
+                    break
                 elif user_choice == 4:
                     summary()
                 elif user_choice == 5:
                     print("")
                     print("\t\t\tBye Bye")
-                    break
+                    exit()
                 else:
                     print("Please enter a valid option")
 
@@ -142,6 +146,7 @@ def create_employee(employee_list):
         else:
             print("")
             print("Back to Main Menu")
+            menu()
             break
 
     return employee_list
@@ -175,7 +180,7 @@ def create_item(item_list):
                 else:
                     break
 
-        item_name = input("Enter Employee Name: ")
+        item_name = input("Enter Item Name: ")
 
         while True:
             try:
@@ -202,13 +207,23 @@ def create_item(item_list):
         else:
             print("")
             print("Back to Main Menu")
+            menu()
             break
 
     return item_list
 
 
-def make_purchase():
-    print("Test")
+def make_purchase(item_list):
+    print("")
+    print(35 * "-")
+    print("\t\t\tPurchase Menu")
+    print(35 * "-")
+    print("")
+    print("Item List:")
+    print("")
+    print(f"Item Number,", "Item Name", "Item Cost")
+    for obj in item_list:
+        print(f"{obj.item_number}, {obj.item_name}, ${obj.item_cost}")
 
 
 def summary():
@@ -216,8 +231,4 @@ def summary():
 
 
 if __name__ == "__main__":
-    for obj in employee_list:
-        print(obj)
-    for obj in item_list:
-        print(obj)
     menu()
