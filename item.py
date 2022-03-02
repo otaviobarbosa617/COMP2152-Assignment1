@@ -30,4 +30,4 @@ class Item:
     def __str__(self) -> str:
         return f"\nItem Number: {self.item_number}\n" \
                f"Item Name: {self.item_name}\n" \
-               f"Item Cost: {self.item_cost}\n"
+               f"Item Cost: {self.item_cost}"

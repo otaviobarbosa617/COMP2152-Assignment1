@@ -7,15 +7,25 @@ import item
 
 # Pre Populate the list
 employee_list = []
-employee1 = employee.Employee(1001, "Otavio Barbosa", "Hourly", 10, 0, 0, 222333)
+employee1 = employee.Employee(1001, "John Alber", "hourly", 8, 0, 0, 22737)
+employee2 = employee.Employee(1002, "Sarah Rose", "manager", 12, 0, 0, 22344)
+employee3 = employee.Employee(1003, "Alex Folen", "manager", 5, 0, 0, 22957)
+employee4 = employee.Employee(1004, "Pola Sahari", "hourly", 17, 0, 0, 22488)
 employee_list.append(employee1)
+employee_list.append(employee2)
+employee_list.append(employee3)
+employee_list.append(employee4)
 
 item_list = []
-item1 = item.Item(1, "Python Course", 199)
-item2 = item.Item(2, "C# Course", 299)
+item1 = item.Item(11526, "Nike shoes", 120)
+item2 = item.Item(11849, "Trampoline", 180)
+item3 = item.Item(11966, "Mercury Bicycle", 150)
+item4 = item.Item(11334, "Necklace Set", 80)
 item_list.append(item1)
 item_list.append(item2)
+item_list.append(item3)
 
+purchase_list = []
 
 def menu():
     while True:
@@ -41,7 +51,7 @@ def menu():
                     create_item(item_list)
                     break
                 elif user_choice == 3:
-                    make_purchase(item_list)
+                    make_purchase(item_list, employee_list, purchase_list)
                     break
                 elif user_choice == 4:
                     summary()
@@ -213,17 +223,147 @@ def create_item(item_list):
     return item_list
 
 
-def make_purchase(item_list):
+def print_items_list(item_list):
+    print("")
+    print("Item List:")
+    print("")
+    print(f'{"Item Number |":2} {"Item Name":14} {"| Item Cost":13}')
+    for obj in item_list:
+        print(f'{obj.item_number:<11} | {obj.item_name:15}| ${obj.item_cost:<9}')
+    print("")
+    return
+
+
+def find_employee(employee_list):
+    global employee_selected
+    while True:
+        print("22737 for test")
+        try:
+            employee_discount_number = int(input("Enter an Employee Discount Number: "))
+        except ValueError:
+            print("You have not entered a number")
+            continue
+        else:
+            for obj in employee_list:
+                if employee_discount_number == obj.employee_discount_number:
+                    print(f"{employee_discount_number} found! Employee Name: {obj.employee_name}")
+                    print("")
+                    employee_selected = obj
+                    break
+                else:
+                    continue
+            else:
+                print(f"{employee_discount_number} not found on the Employee List")
+                print("")
+                continue
+            break
+    return employee_selected
+
+
+def purchase_item(item_list):
+    global item_selected
+    while True:
+        try:
+            item_number = int(input("Enter an Item Number: "))
+        except ValueError:
+            print("You have not entered a number")
+            continue
+        else:
+            for obj in item_list:
+                if item_number == obj.item_number:
+                    print(f"{item_number} found! Item Name: {obj.item_name}")
+                    print("")
+                    item_selected = obj
+                    break
+                else:
+                    continue
+            else:
+                print(f"{item_number} not found on the Item List")
+                continue
+            break
+    return item_selected
+
+
+def calculate_discount(employee_selected):
+    global discount_total
+    if employee_selected.get_employee_discounts() < 200:
+        discount_total = min((employee_selected.get_employee_years() * 0.02), 0.10)
+        discount_type = employee_selected.get_employee_type()
+        if discount_type == "manager":
+            discount_total += 0.10
+            return discount_total
+        else:
+            discount_total += 0.02
+            return discount_total
+    else:
+        print("Employee doesn't have any discount allowance")
+        return discount_total
+
+
+def confirm_purchase(item_selected, employee_selected, purchase_list):
+    while True:
+        print("")
+        print("Purchase - Details:")
+        print(f"Item: {item_selected.item_name}, ${item_selected.item_cost} "
+              f"for Employee: {employee_selected.employee_name}, {employee_selected.employee_discount_number}")
+
+        calculate_discount(employee_selected)
+
+        if discount_total != 0:
+            print(f"{employee_selected.employee_name} has a total discount of {discount_total * 100:.1f}%")
+        else:
+            print(f"{employee_selected.employee_name} does not have a discount allowance")
+
+        discount_amount = discount_total * item_selected.item_cost
+        final_price_item = item_selected.item_cost - discount_amount
+        print(f"Item has the final price of {final_price_item}")
+
+        while True:
+            user_confirm_purchase = input("Do you wish to "
+                                          "confirm this purchase? Type YES to confirm or NO to Cancel: ").lower()
+            if user_confirm_purchase == "yes":
+                employee_total_purchases = employee_selected.get_employee_purchased()
+                employee_total_purchases += final_price_item
+                employee_selected.set_employee_purchased(employee_total_purchases)
+
+                employee_total_discount = employee_selected.get_employee_discounts()
+                employee_total_discount += discount_amount
+                employee_selected.set_employee_discounts(employee_total_discount)
+                purchase_list.append(item.Item(item_selected.item_number, item_selected.item_name, final_price_item))
+                break
+            else:
+                print("Cancel")
+                break
+        break
+    return purchase_list
+
+
+def make_purchase(item_list, employee_list, purchase_list):
     print("")
     print(35 * "-")
     print("\t\t\tPurchase Menu")
     print(35 * "-")
-    print("")
-    print("Item List:")
-    print("")
-    print(f"Item Number,", "Item Name", "Item Cost")
-    for obj in item_list:
-        print(f"{obj.item_number}, {obj.item_name}, ${obj.item_cost}")
+    while True:
+        print_items_list(item_list)
+        find_employee(employee_list)
+        calculate_discount(employee_selected)
+        purchase_item(item_list)
+        confirm_purchase(item_selected, employee_selected, purchase_list)
+        purchase_menu_choice = input("Do you wish to add more items? "
+                                     "Press enter to continue or Type NO to stop: ").lower()
+        if purchase_menu_choice != "no":
+            continue
+        else:
+            print(f"{employee_selected.employee_name} has confirmed the following purchases: ")
+            total_amount_transaction = 0
+            for obj in purchase_list:
+                print(obj)
+                total_amount_transaction += obj.item_cost
+            print(f"Total amount of this purchase: {total_amount_transaction}")
+            print("")
+            print("Back to Main Menu")
+            menu()
+            break
 
 
 def summary():

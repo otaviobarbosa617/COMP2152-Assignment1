@@ -50,7 +50,7 @@ class Employee:
     def get_employee_purchased(self):
         return self.employee_purchased
 
-    def set_employee_discounts(self):
+    def get_employee_discounts(self):
         return self.employee_discounts
 
     def get_employee_discount_number(self):
@@ -63,4 +63,4 @@ class Employee:
                f"Employee Years Worked: {self.employee_years}\n" \
                f"Employee Total Purchases: {self.employee_purchased}\n" \
                f"Employee Total Discounts: {self.employee_discounts}\n" \
-               f"Employee Discount Number: {self.employee_discount_number}\n"
+               f"Employee Discount Number: {self.employee_discount_number}"
