@@ -14,15 +14,6 @@ class Employee:
         self.employee_discounts = employee_discounts
         self.employee_purchased = employee_purchased
 
-    # def __init__(self, employee_id, employee_name, employee_type, employee_years, employee_discount_number):
-    #     self.employee_id = int(employee_id)
-    #     self.employee_name = employee_name
-    #     self.employee_type = employee_type
-    #     self.employee_years = int(employee_years)
-    #     self.employee_discount_number = int(employee_discount_number)
-    #     self.employee_discounts = 0
-    #     self.employee_purchased = 0
-
     def set_employee_id(self, employee_id):
         self.employee_id = employee_id
 

@@ -3,16 +3,20 @@
 # Otavio Pereira-Barbosa - 101337690
 
 import employee
+import item
 
 # Pre Populate the list
 employee_list = []
 employee1 = employee.Employee(1001, "Otavio Barbosa", "Hourly", 10, 0, 0, 222333)
 employee_list.append(employee1)
 
+item_list = []
+item1 = item.Item(1, "Python Course", 199)
+item_list.append(item1)
+
 
 def menu():
-    menu_active = True
-    while menu_active:
+    while True:
         print(35 * "-")
         print("|\t\t\tMain Menu", "|".rjust(13))
         print("| 1 - Create Employee", "|".rjust(13))
@@ -32,7 +36,7 @@ def menu():
                     create_employee(employee_list)
                     continue
                 elif user_choice == 2:
-                    create_item()
+                    create_item(item_list)
                 elif user_choice == 3:
                     make_purchase()
                 elif user_choice == 4:
@@ -40,7 +44,6 @@ def menu():
                 elif user_choice == 5:
                     print("")
                     print("\t\t\tBye Bye")
-                    menu_active = False
                     break
                 else:
                     print("Please enter a valid option")
@@ -144,8 +147,64 @@ def create_employee(employee_list):
     return employee_list
 
 
-def create_item():
-    print("Test")
+def create_item(item_list):
+    item_number = 0
+    item_cost = 0
+    print("")
+    print(35 * "-")
+    print("\t\t\tItem Menu")
+    print(35 * "-")
+    print("")
+    while True:
+        while True:
+            try:
+                item_number = int(input("Enter an Item Number: "))
+            except ValueError:
+                print("You have not entered a number")
+                continue
+            else:
+                for obj in item_list:
+                    if item_number == obj.item_number:
+                        print(f"\nWARNING - Item Number {item_number} already exists!"
+                              f"\nItem Number: {obj.item_number}, Item Name: {obj.item_name}")
+                        print("Please, try again!")
+                        print("")
+                        break
+                    else:
+                        continue
+                else:
+                    break
+
+        item_name = input("Enter Employee Name: ")
+
+        while True:
+            try:
+                item_cost = int(input("Enter Item Cost: "))
+                break
+            except ValueError:
+                print("")
+                print("You have not entered a number for Item Cost")
+                print("Please, try again!")
+                print("")
+                continue
+
+        new_item = item.Item(item_number, item_name, item_cost)
+        item_list.append(new_item)
+        print("Your new item:")
+        print(new_item)
+        print(f"Item {item_name} added with success")
+        print("")
+
+        item_menu_choice = input("Do you wish to add more items? "
+                                 "Press enter to continue or Type NO to stop: ").lower()
+        if item_menu_choice != "no":
+            continue
+        else:
+            print("")
+            print("Back to Main Menu")
+            break
+
+    return item_list
 
 
 def make_purchase():
@@ -157,4 +216,8 @@ def summary():
 
 
 if __name__ == "__main__":
+    for obj in employee_list:
+        print(obj)
+    for obj in item_list:
+        print(obj)
     menu()
