@@ -59,7 +59,9 @@ def menu():
                     break
                 elif user_choice == 5:
                     print("")
-                    print("\t\t\tBye Bye")
+                    print("\t\t\t\tBye Bye")
+                    print("\t\tCOMP 2152 - Assignment 1")
+                    print("\tOtavio Pereira-Barbosa - 101337690")
                     exit()
                 else:
                     print("Please enter a valid option")
@@ -329,7 +331,8 @@ def confirm_purchase(item_selected, employee_selected, purchase_list):
                 employee_total_discount = employee_selected.get_employee_discounts()
                 employee_total_discount += discount_amount
                 employee_selected.set_employee_discounts(employee_total_discount)
-                purchase_list.append(item.Item(item_selected.item_number, item_selected.item_name, final_price_item))
+                purchase_list.append(item.Item(item_selected.item_number,
+                                               item_selected.item_name, final_price_item))
                 break
             else:
                 print("Cancel")
@@ -345,29 +348,21 @@ def make_purchase(item_list, employee_list, purchase_list):
     print(35 * "-")
     while True:
         print_items_list(item_list)
-        find_employee(employee_list)
-
         while True:
+            find_employee(employee_list)
             calculate_discount(employee_selected)
             purchase_item(item_list)
             confirm_purchase(item_selected, employee_selected, purchase_list)
             purchase_menu_choice = input("Do you wish to add more items? "
                                          "Press enter to continue or Type NO to stop: ").lower()
             if purchase_menu_choice != "no":
+                print_items_list(item_list)
                 continue
             else:
+                summary(employee_list)
                 break
-
-        print(f"{employee_selected.employee_name} has confirmed the following purchases: ")
-        total_amount_transaction = 0
-        for obj in purchase_list:
-            print(obj)
-        total_amount_transaction += obj.item_cost
-        print(f"Total amount of this purchase: {total_amount_transaction}")
-
         print("")
         print("Back to Main Menu")
-        menu()
         break
     return purchase_list
 
@@ -381,9 +376,11 @@ def summary(employee_list):
         print("")
         print("Employee List")
         print("")
-        print(f'{"Employee ID: |":2} {"Employee Name: ":14} {"|Employee Type":13} {"|Years Worked":13}')
+        print(f'{"Employee ID: ":2} {"|Employee Name: ":14} {"|Employee Type: ":13} {"|Years Worked: ":13} '
+              f'{"|Total Purchased: ":13} {"|Total Discount: ":13} {"|Employee Discount Number: ":13}')
         for obj in employee_list:
-            print(f'{obj.employee_id:<11} | {obj.employee_name:15}| {obj.employee_type:<9} {obj.employee_years:15}| ')
+            print(f'{obj.employee_id:<13} |{obj.employee_name:15} |{obj.employee_type:15} |{obj.employee_years:<14} '
+                  f'|{obj.employee_purchased:<17} |{obj.employee_discounts:<16} |{obj.employee_discount_number:<15} ')
         print("")
         user_choice_summary = input("Press enter to continue or type NO to go back: ").lower()
         if user_choice_summary != "no":
@@ -391,7 +388,6 @@ def summary(employee_list):
         else:
             break
     return
-
 
 
 if __name__ == "__main__":
